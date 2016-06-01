@@ -1,0 +1,16 @@
+<h4>cash application</h4>
+<h5>{{appError}}&nbsp;</h5>
+{{input type="text" value=subName placeholder="input name for category"}}
+<button {{action "addTopCat" subName }}>add category</button>
+<hr>
+
+<ul>
+{{#each model as |el|}}
+	{{#if el.top}}
+		<li>
+			<ul>{{recursive-category parentCategoryId = el.id }}</ul>
+		</li>
+	{{/if}}
+{{/each}}
+</ul>
+

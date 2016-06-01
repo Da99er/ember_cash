@@ -1,0 +1,19 @@
+<li>
+	<p>
+		<strong>{{parentCategory.name}}</strong>
+		{{input value=subCategory placeholder="input name of subcategory" }} 
+		<button {{action "addSubCategory" subCategory parentCategoryId}} >add subCategory</button> 
+		<button {{action "removeCategoty" parentCategory.id }}>remove this category</button>
+	</p>
+	<p class="catError">
+		&nbsp;{{catError}}
+	</p>	
+	{{#if parentCategory.childcat}}
+	<ul>
+		{{#each parentCategory.childcat as |el|}}
+			{{recursive-category parentCategoryId=el.id}}
+		{{/each}}
+	</ul>
+	{{/if}}
+</li>
+
