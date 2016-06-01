@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
     tagName: 'li',
     store: Ember.inject.service(),
+    money: 0,
     init() {
         this._super(...arguments);
         this.catError = "";
@@ -71,8 +72,12 @@ export default Ember.Component.extend({
                 }
 
             }
-            
+
             recursiveEraseRelationship(DeletedCategoryId);
+        },
+        addMoney: function(money, parentCategoryId) {
+            console.log("money", money, parentCategoryId);
+
         },
         showError: function(errorText) {
             this.set("catError", "ERROR->" + errorText);
