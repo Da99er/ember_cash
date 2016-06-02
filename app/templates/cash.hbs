@@ -3,6 +3,11 @@
 {{input type="text" value=subName placeholder="input name for category"}}
 <button {{action "addTopCat" subName }}>add category</button>
 <hr>
+<p>Date area</p>
+now Data: {{date-picker date=model.nowData valueFormat='YYYY-MM-DD'}}
+start Data: {{date-picker date=model.startData valueFormat='YYYY-MM-DD'}}
+end Data: {{date-picker date=model.endData valueFormat='YYYY-MM-DD'}}
+<hr>
 
 <ul>
 {{#each model as |el|}}

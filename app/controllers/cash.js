@@ -3,6 +3,10 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
     appName: "cash library",
     appError: "",
+    //this.set("model.nowData","01-01-2016"),
+    //nowData:"01-01-2016",
+    //startData:"06-01-2016",
+    //endData:"16-01-2016",
     actions: {
         addTopCat: function(subname) {
             console.log(subname,this.get('model'));

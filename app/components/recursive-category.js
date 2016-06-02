@@ -26,10 +26,11 @@ export default Ember.Component.extend({
             console.log("name", this.get('store').peekRecord('category', this.get("parentCategoryId")).get('name'));
 
             var isDuplicateName = this.get("parentCategory").get("childcat").getEach('name').some(function(e) {
-                console.log("childcatnames", e);
+                
                 if (e === newCategoryName) {
                     return true;
                 }
+
             });
 
             var newSubCategory = {
@@ -58,6 +59,7 @@ export default Ember.Component.extend({
             }
 
             function recursiveEraseRelationship(id) {
+                
                 if (id) {
                     var DeletedCategory = modelThis.get('store').peekRecord('category', id);
                     if (DeletedCategory.get("childcat").get("length")) {
@@ -72,15 +74,39 @@ export default Ember.Component.extend({
                 }
 
             }
-
+ 
             recursiveEraseRelationship(DeletedCategoryId);
         },
-        addMoney: function(money, parentCategoryId) {
-            console.log("money", money, parentCategoryId);
+        addMoney: function(money, categoryId) {
+            var modelThis = this;
+            console.log(modelThis.get("store").get("nowData"));
+            console.log("money", money, categoryId);
+
+            if (money) {
+                var category = this.get('store').peekRecord('category', categoryId);
+                
+
+
+            } else {
+                this.send("showError", "please input some number");
+            }
+
+
+
 
         },
         showError: function(errorText) {
-            this.set("catError", "ERROR->" + errorText);
+            var modelThis = this;
+            modelThis.set("catError", "ERROR->" + errorText);
+
+            if (!modelThis.get("errorStatus")) {
+                modelThis.set("errorStatus", true);
+                setTimeout(function() {
+                    modelThis.set("catError", "");
+                    modelThis.set("errorStatus", false);
+                }, 2000);
+            }
+
         }
     }
 });

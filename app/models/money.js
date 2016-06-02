@@ -4,5 +4,6 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
     createData: attr('string'),
-    categories: belongsTo('categories')
+    price:attr("number"),
+    category: belongsTo('category')
 });
