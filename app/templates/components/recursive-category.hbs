@@ -1,20 +1,20 @@
 <li>
 	<p>
-		<strong>{{parentCategory.name}}</strong>
-		<i>count of money: <strong>{{money}}</strong></i>
+		<strong>{{category.name}}</strong>
+		<i>count of money: {{total-cost category.money}}<strong>{{amountMoney}}</strong></i>
 		{{input type="number" value=newMoney placeholder="type mach you want add" }} 
-		<button {{ action "addMoney" newMoney parentCategoryId}} >add money</button>
+		<button {{ action "addMoney" newMoney }} >add money</button>
 		{{input value=subCategory placeholder="input name of subcategory" }} 
-		<button {{action "addSubCategory" subCategory parentCategoryId}} >add subCategory</button> 
-		<button {{action "removeCategoty" parentCategory.id }}>remove this category</button>
+		<button {{action "addSubCategory" subCategory }} >add subCategory</button> 
+		<button {{action "removeCategoty" }}>remove this category</button>
 	</p>
 	<p class="catError">
 		&nbsp;{{catError}}
 	</p>	
-	{{#if parentCategory.childcat}}
+	{{#if category.childcat}}
 	<ul>
-		{{#each parentCategory.childcat as |el|}}
-			{{recursive-category parentCategoryId=el.id}}
+		{{#each category.childcat as |el|}}
+			{{recursive-category сategoryId=el.id}}
 		{{/each}}
 	</ul>
 	{{/if}}

@@ -4,16 +4,16 @@
 <button {{action "addTopCat" subName }}>add category</button>
 <hr>
 <p>Date area</p>
-now Data: {{date-picker date=model.nowData valueFormat='YYYY-MM-DD'}}
-start Data: {{date-picker date=model.startData valueFormat='YYYY-MM-DD'}}
-end Data: {{date-picker date=model.endData valueFormat='YYYY-MM-DD'}}
+now Data: {{date-picker date=dateStore.nowData valueFormat='DD-MM-YYYY'}}
+start Data: {{date-picker date=dateStore.startData valueFormat='DD-MM-YYYY'}}
+end Data: {{date-picker date=dateStore.endData valueFormat='DD-MM-YYYY'}}
 <hr>
 
 <ul>
 {{#each model as |el|}}
 	{{#if el.top}}
 		<li>
-			<ul>{{recursive-category parentCategoryId = el.id }}</ul>
+			<ul>{{recursive-category сategoryId = el.id }}</ul>
 		</li>
 	{{/if}}
 {{/each}}

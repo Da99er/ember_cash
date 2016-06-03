@@ -2,15 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
     appName: "cash library",
+    dateStore: Ember.inject.service(),
     appError: "",
-    //this.set("model.nowData","01-01-2016"),
-    //nowData:"01-01-2016",
-    //startData:"06-01-2016",
-    //endData:"16-01-2016",
     actions: {
         addTopCat: function(subname) {
-            console.log(subname,this.get('model'));
-
             //search duplicate item in model
             var isDuplicateName = this.get('model').getEach('name').some(function(e) {
                 //console.log(e);
@@ -38,7 +33,16 @@ export default Ember.Controller.extend({
 
         },
         showError: function(errorText) {
-            this.set("appError", "ERROR->" + errorText);
+            var modelThis = this;
+            modelThis.set("appError", "ERROR->" + errorText);
+
+            if (!modelThis.get("errorStatus")) {
+                modelThis.set("errorStatus", true);
+                setTimeout(function() {
+                    modelThis.set("appError", "");
+                    modelThis.set("errorStatus", false);
+                }, 2000);
+            }
         }
     }
 });
