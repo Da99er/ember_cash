@@ -7,7 +7,7 @@ function recursiveEraseRelationship(id, modelThis) {
 
         if (DeletedCategory.get("childcat").get("length")) {
             DeletedCategory.get("childcat").forEach((el) => {
-                recursiveEraseRelationship(el.get('id'));
+                recursiveEraseRelationship(el.get('id'),modelThis);
             });
         }
 
