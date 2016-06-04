@@ -57,14 +57,12 @@ export default Ember.Component.extend({
         this.catError = "";
         this.сategoryId = this.attrs.сategoryId.value;
         this.category = this.get('store').peekRecord("category", this.get("сategoryId"));
-        console.log("init id", this.category.get("id"));
     },
     didUpdateAttrs() {
         this._super(...arguments);
         this.set("catError", "");
         this.set("сategoryId", this.attrs.сategoryId.value);
         this.set("сategory", this.get("store").peekRecord("category", this.get("сategoryId")));
-        console.log("rerender name -->", this.get("сategory").get("name"));
     },
     didRender() {
 
