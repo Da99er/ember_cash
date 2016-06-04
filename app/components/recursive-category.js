@@ -1,11 +1,12 @@
 import Ember from 'ember';
 
+//will erase all relationships and delete self and child category
 function recursiveEraseRelationship(id, modelThis) {
 
     if (id) {
         var DeletedCategory = modelThis.get('store').peekRecord('category', id);
 
-        if (DeletedCategory.get("childcat").get("length")) {
+        if (DeletedCategory.get("childcat.length")) {
             DeletedCategory.get("childcat").forEach((el) => {
                 recursiveEraseRelationship(el.get('id'),modelThis);
             });
@@ -18,6 +19,7 @@ function recursiveEraseRelationship(id, modelThis) {
 
 }
 
+//add this money in hierarchy of categorues from this category to first parent
 function recursiveAddMoney(category, money) {
     category.get("money").pushObject(money);
 
@@ -31,10 +33,10 @@ function recursiveAddMoney(category, money) {
     money.save();
 }
 
-
+//remove all money in hierarchy of categorues from this category to first parent
 function recursiveRemoveMoney(category, money) {
-    category.get('money').removeObjects(money);
-
+    console.log("recursiveRemoveMoney",category.get("name"));
+    category.get("money").removeObjects(money);
     if (!category.get("top")) {
         category.get("parentcat").then((el) => {
             recursiveRemoveMoney(el, money);
@@ -65,8 +67,7 @@ export default Ember.Component.extend({
         console.log("rerender name -->", this.get("сategory").get("name"));
     },
     didRender() {
-
-        //console.log("after", this.get("dateStore").get("nowData"), this.get("сategoryId"));
+        //console.log("after",this.get("category.id"));
 
     },
     actions: {
@@ -75,7 +76,7 @@ export default Ember.Component.extend({
             if (!newCategoryName) {
                 this.send("showError", "please type some name");
             } else {
-                var isDuplicateName = this.get("category").get("childcat").getEach("name").some(function(e) {
+                var isDuplicateName = this.get("category.childcat").getEach("name").some(function(e) {
 
                     if (e === newCategoryName) {
                         return true;
@@ -119,7 +120,7 @@ export default Ember.Component.extend({
             if (money) {
                 var category = this.get('store').peekRecord('category', this.get('сategoryId'));
                 var moneyObj = {
-                    createData: this.get("dateStore").get("nowData"),
+                    createDate: this.get("dateStore.nowDate"),
                     price: money
                 };
                 var newMoney = this.get('store').createRecord("money", moneyObj);
@@ -153,17 +154,3 @@ export default Ember.Component.extend({
         }
     }
 });
-
-/*
-    name: attr('string'),
-    top:attr('boolean'),
-    money: hasMany('money'),
-    childcat: hasMany('category', { inverse: 'parentcat' }),
-    parentcat: belongsTo('category', { inverse: 'childcat' })
-
-    createData: attr('string'),
-    price:attr("number"),
-    category: belongsTo('category')
-
-
-*/

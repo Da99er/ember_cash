@@ -4,9 +4,9 @@
 <button {{action "addTopCat" subName }}>add category</button>
 <hr>
 <p>Date area</p>
-now Data: {{date-picker date=dateStore.nowData valueFormat='DD-MM-YYYY'}}
-start Data: {{date-picker date=dateStore.startData valueFormat='DD-MM-YYYY'}}
-end Data: {{date-picker date=dateStore.endData valueFormat='DD-MM-YYYY'}}
+now Date: {{date-picker date=dateStore.nowDate valueFormat='YYYY-MM-DD'}}
+start Date: {{date-picker date=dateStore.startDate valueFormat='YYYY-MM-DD'}}
+end Date: {{date-picker date=dateStore.endDate valueFormat='YYYY-MM-DD'}}
 <hr>
 
 <ul>
@@ -18,4 +18,7 @@ end Data: {{date-picker date=dateStore.endData valueFormat='DD-MM-YYYY'}}
 	{{/if}}
 {{/each}}
 </ul>
+{{dateStore.startDate}}#{{model.length}}
+
+{{ pie-chart startDate=dateStore.startDate endDate=dateStore.endDate categoriesLength=store.category.length moneyLength=store.money.length }}
 
