@@ -18,7 +18,6 @@ end Date: {{date-picker date=dateStore.endDate valueFormat='YYYY-MM-DD'}}
 	{{/if}}
 {{/each}}
 </ul>
-{{dateStore.startDate}}#{{model.length}}
 
-{{ pie-chart startDate=dateStore.startDate endDate=dateStore.endDate categoriesLength=store.category.length moneyLength=store.money.length }}
+{{ pie-chart startDate=dateStore.startDate endDate=dateStore.endDate startRender=dateStore.startRender }}
 

@@ -8,7 +8,7 @@ function recursiveEraseRelationship(id, modelThis) {
 
         if (DeletedCategory.get("childcat.length")) {
             DeletedCategory.get("childcat").forEach((el) => {
-                recursiveEraseRelationship(el.get('id'),modelThis);
+                recursiveEraseRelationship(el.get('id'), modelThis);
             });
         }
 
@@ -35,8 +35,8 @@ function recursiveAddMoney(category, money) {
 
 //remove all money in hierarchy of categorues from this category to first parent
 function recursiveRemoveMoney(category, money) {
-    console.log("recursiveRemoveMoney",category.get("name"));
     category.get("money").removeObjects(money);
+
     if (!category.get("top")) {
         category.get("parentcat").then((el) => {
             recursiveRemoveMoney(el, money);
@@ -67,7 +67,14 @@ export default Ember.Component.extend({
         console.log("rerender name -->", this.get("сategory").get("name"));
     },
     didRender() {
-        //console.log("after",this.get("category.id"));
+
+        if (!this.get("renderStarted")) {
+            this.set("renderStarted",true);
+            setTimeout(function(modelThis) {
+                modelThis.set("dateStore.startRender", Date.now());
+                modelThis.set("renderStarted",false);
+            }, 100, this);
+        }
 
     },
     actions: {

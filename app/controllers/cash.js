@@ -4,7 +4,6 @@ export default Ember.Controller.extend({
     appName: "cash",
     dateStore: Ember.inject.service(),
     appError: "",
-    store: Ember.inject.service(),
     actions: {
         addTopCat: function(subname) {
             //search duplicate item in model

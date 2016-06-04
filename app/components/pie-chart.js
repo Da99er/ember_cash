@@ -1,31 +1,51 @@
 import Ember from 'ember';
 
-function renderPie(dom, myLabels, myData) {
+function renderPie(ctx, myLabels, myData) {
     var colors = [];
 
-    var data = {
-        labels: myLabels,
-        datasets: [{
-            data: myData,
-            backgroundColor: colors
-        }]
-    };
-
-    var ctx = dom;
-
-    if (ctx.getAttribute("rendered")) {
-        console.log("deleted");
-        myChart.clear();
-        myChart.destroy();
-
-    }
-    ctx.setAttribute("rendered", true);
-
-    myChart = new Chart(ctx, {
-        type: 'pie',
-        data: data
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ["Red", "Blue"],
+            datasets: [{
+                label: '# value',
+                data: [2, 20],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255,99,132,1)',
+                    'rgba(54, 162, 235, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            segmentShowStroke: false,
+            animateRotate: true,
+            animateScale: false,
+            tooltipTemplate: "<%= value %>%"
+        }
     });
+
+
+    /*myChart.data.datasets[0].data[2] = 50; 
+    myChart.data.datasets[0].backgroundColor[2] = 'rgba(154, 162, 35, 1)'; 
+    myChart.data.datasets[0].borderColor[2] = 'rgba(54, 62, 35, 1)'; 
+	myChart.data.labels[2]="qqq";*/
+	
+    console.log(myChart.data);
+	myChart.update(); // Calling update now animates the position of March from 90 to 50.
+
+
 }
+
+/*// duration is the time for the animation of the redraw in miliseconds
+// lazy is a boolean. if true, the animation can be interupted by other animations
+myLineChart.data.datasets[0].data[2] = 50; // Would update the first dataset's value of 'March' to be 50
+myLineChart.update(); // Calling update now animates the position of March from 90 to 50.
+*/
 
 function stringToColour(str) {
     // str to hash
@@ -38,6 +58,7 @@ function stringToColour(str) {
 export default Ember.Component.extend({
     tagName: 'canvas',
     classNames: ["pieChars"],
+    store: Ember.inject.service(),
     dateStore: Ember.inject.service(),
     name: "pieChars",
     attributeBindings: ['name'],
@@ -45,41 +66,42 @@ export default Ember.Component.extend({
         this._super(...arguments);
         this.set("startDate", this.attrs.startDate.value);
         this.set("endDate", this.attrs.endDate.value);
-        this.set("categoriesLength", this.attrs.categoriesLength.value);
-        this.set("moneyLength", this.attrs.moneyLength.value);
+        this.set("startRender", this.attrs.startRender.value);
         console.log("chart update", this.get("startDate"));
     },
     didRender() {
-        var modelThis = this;
         console.log("pie after");
-        if (!this.get("render")) {
-            this.set("render", true);
-            var myLabels = [];
-            var myData = [];
-            var startData = parseInt(modelThis.get("dateStore.startDate").split("-").join(''));
-            var endDate = parseInt(modelThis.get("dateStore.endDate").split("-").join(''));
 
-            //console.log("modelThis",modelThis.get("store").peekAll("category"));
-            /*modelThis.get("store").peekAll("category").forEach((category, index) => {
-                if (category.get("top")) {
-                    myLabels.push(category.get("name"));
+        var myLabels = [];
+        var myData = [];
+        var startData = parseInt(this.get("dateStore.startDate").split("-").join(''));
+        var endDate = parseInt(this.get("dateStore.endDate").split("-").join(''));
 
-                    //category.forEach()
-  
+        this.get("store").peekAll("category").forEach((category, index) => {
 
+            if (category.get("top")) {
+                myLabels.push(category.get("name"));
+                var filteredMoneyByDates = 0;
 
+                category.get("money").then((money) => {
+                    money.forEach((el) => {
+                        var elData = parseInt(el.get("createDate").split("-").join(''));
 
-                    console.log("pie chart index",index);
-                }
-            });*/
+                        if (elData >= startData && elData <= endDate) {
+                            filteredMoneyByDates += parseInt(el.get("price")) || 0;
+                        }
 
-            console.log(myLabels,myData);
+                    });
+                    myData.push(filteredMoneyByDates);
+                });
+            }
+        });
 
-            setTimeout(function(modelThis) {
+        setTimeout(function() {
+            console.log(myLabels, myData);
+            renderPie(document.getElementsByName('pieChars')[0], myLabels, myData);
+        }, 0);
 
-                //renderPie(document.getElementsByName("pieChars")[0], myLabels, myData);
-            }, 10, this);
-        }
     },
     actions: {
 
