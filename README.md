@@ -1,7 +1,10 @@
 # Cash
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+web application for manage your money. You can create categories with subcategories and some cash. Parent category automatically calculate all money in subcategories. Enjoy it.
+
+-now you can add and remove categories recursive
+-chart grapic automatically update after operations
+-errors shows for every categories.
 
 ## Prerequisites
 
