@@ -1,8 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Service.extend({
-    nowDate:"2016-06-06",
-    startDate:"2016-06-05",
-    endDate:"2016-06-07",
-    startRender:0
+    nowDate:moment(new Date()).format("YYYY-MM-DD"),
+    startDate:moment(new Date()).format("YYYY-MM-DD"),
+    endDate:moment(new Date()).format("YYYY-MM-DD"),
+    startRender:0 //value for send to pie chart component start command to render
 });

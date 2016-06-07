@@ -8,6 +8,7 @@ module.exports = function(defaults) {
     });
 
     app.import('bower_components/Chart.js/dist/Chart.min.js');
+    app.import('bower_components/moment/min/moment.min.js');
     app.import('vendor/piechart/piechart.js');
 
     // Use `app.import` to add additional libraries to the generated

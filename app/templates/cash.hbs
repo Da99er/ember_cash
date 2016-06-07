@@ -3,10 +3,9 @@
 {{input type="text" value=subName placeholder="input name for category"}}
 <button {{action "addTopCat" subName }}>add category</button>
 <hr>
-<p>Date area</p>
-now Date: {{date-picker date=dateStore.nowDate valueFormat='YYYY-MM-DD'}}
-start Date: {{date-picker date=dateStore.startDate valueFormat='YYYY-MM-DD'}}
-end Date: {{date-picker date=dateStore.endDate valueFormat='YYYY-MM-DD'}}
+<p>Choose date for your operations</p>
+Dates for your new transactions: {{date-picker date=dateStore.nowDate valueFormat='YYYY-MM-DD'}}
+
 <hr>
 
 <ul>
@@ -19,5 +18,11 @@ end Date: {{date-picker date=dateStore.endDate valueFormat='YYYY-MM-DD'}}
 {{/each}}
 </ul>
 
+<h4>History of operations</h4>
+<p>This is graphic can show for you your history of operations from start date to end date</p>
+<p>you can switch this dates</p>
+Start date of history of operations: {{date-picker date=dateStore.startDate valueFormat='YYYY-MM-DD'}}
+End date of history of operations: {{date-picker date=dateStore.endDate valueFormat='YYYY-MM-DD'}}
+<hr>
 {{ pie-chart startDate=dateStore.startDate endDate=dateStore.endDate startRender=dateStore.startRender categories=model.length }}
 
